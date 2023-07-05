@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body %}
+        <div class="container mt-3 ">
+            <h1 style="color: green" >Fourteen - O melhor Quatorze da internet</h1>
+            <h3 >Uma comunidade para falar sobre os seu jogos favoritos e outras coisas</h3>
+            <hr>
+            {% for post in posts %}
+                <div class="row border mt-4 p-3 meupost">
+                    <div class="col col-3">
+                        <div class="image ms-5">
+                            <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="150">
+                        </div>
+                        <strong class="ms-5">{{ post.autor.username }}</strong>
+                        <div class="row justify-content-center">
+                            <div class="col" style="text-align: center">
+                                {% for jogos in post.autor.jogos_fav.split(';') %}
+                                    <button type="button" class="btn btn-outline-danger mt-2" disabled>{{ jogos }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-9">
+                        <a style="text-decoration: none" class="text-dark" href="{{ url_for('exibir_post',post_id=post.id) }}">
+                            <h3>
+                                {{ post.titulo }}
+                                <small class="text-muted" style="font-size: 14px"> - Data de criação: {{ post.data_criacao.strftime('%d/%m/%Y') }} </small>
+                            </h3>
+                        </a>
+                        <hr>
+                        <p>{{ post.corpo }}</p>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}
